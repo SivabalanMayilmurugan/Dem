@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <title>gym</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form id="gymform">
+            <label>Name</label>
+            <input type ="text" id="username" required><br><br>
+            <label>Memebership</label>
+            <input type ="text" id="membership" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            document.getElementById('gymform').addEventListener('submit',function(e){
+                e.preventDefault();
+                const uname=document.getElementById('username').value;
+                const mship=document.getElementById('membership').value;
+                fetch("http://localhost:8080/api/membership",
+                    {
+                        method: POST,
+                        headers:{
+                            'content-Type':'application/json',
+                        },
+                        body: JSON.stringify({uname,mship}),
+                    }
+                )
+                .then(response=> response.json())
+                .then(data=>{
+                    alert("Registered");
+                    document.getElementById('gymform').reset();
+                })
+                .catch(error=> console.error("Error:",error))
+            });
+        </script>
+    </body>
+</html>
